@@ -1,8 +1,8 @@
 import {request} from '../utils/request'
-export function getProduct(params){
+export function login(params){
     return request({
         url:"/login",
-        mothod:"post",
-        params:params
+        method:"post",    //  post请求 key必须是data
+        data:params
     })
 }

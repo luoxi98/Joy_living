@@ -12,21 +12,24 @@ export default new Vuex.Store({
   },
   mutations: {
     TOKEN(state,TOKEN){
-      state.token = 
-      setToken(TOKEN)
+      state.token = setToken(TOKEN)
     }
   },
   actions: {
     login({commit},userInfo){
       return new Promise((reslove,reject)=>{
-        let {username,password } = userInfo
-        login({username,password}).then((res)=>{
-          let { data } = res;
-          commit('TOKEN',data.token)
-          reslove(res.data)
+
+
+        let {userName,password } = userInfo
+        console.log(userName,password)
+        login({username:userName,password}).then((res)=>{
+          commit('TOKEN',res.token)
+          reslove(res)
         }).catch((err)=>{
           reject(err);
         })
+
+
       })
     },
   },

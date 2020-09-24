@@ -1,9 +1,10 @@
 export function getURL(){
     let env = getEnv();
-if( env=== 'development'){
-    return env = process.env.VUE_APP_BASE_URL
-}else if(env=== 'production'){
-   return env = process.env.VUE_APP_BASE_URL
+    console.log(process.env.VUE_APP_BASE_URL)
+if( env== 'development'){
+    return process.env.VUE_APP_BASE_URL
+}else if(env== 'production'){
+   return process.env.VUE_APP_BASE_URL
 }
 }
 // 返回环境变量信息
