@@ -64,7 +64,7 @@ export default {
             .then((data) => {  //data就是vuex中的res
               if (data.code == "204") {
                 this.$message({ message: "登陆成功" ,type:"success"});
-                this.$router.push("/home");
+                this.$router.push("/home/index");
               }
               if(data.code == "518"){
                 this.$message({message:"用户名或密码错误"})

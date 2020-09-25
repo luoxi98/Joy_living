@@ -2,10 +2,29 @@
   <div class="home_header">
     <nav class="safe_view">
       <div class="nav_top">
-        <div class="nav_top_login">
+        <div class="nav_top_login" @mouseenter="enter" @mouseleave="leave">
           <img src="../../imgs/icon_account.png" alt />
-          <router-link to="/login">登录</router-link>|
-          <router-link to="/register">注册</router-link>
+            <div v-if="token">
+              <a style="color:#fff;cursor: pointer;">欢迎{{username}}</a>
+              <div>
+                <div class="personal" >
+                <el-collapse-transition>
+                    <div v-show="show3">
+                    <div class="transition-box">
+                      <router-link tag="li" to="/home/myorder">我的订单</router-link>
+                      <router-link tag="li" to="/home/mycoupons">我的优惠券</router-link>
+                      <router-link tag="li" to="/home/mycollect">我的收藏</router-link>
+                      <router-link tag="li" to="/home/mynews">我的消息</router-link>
+                    </div>
+                    </div>
+                </el-collapse-transition>
+                </div>
+            </div>
+          </div>
+          <div v-else>
+                <router-link to="/login" style="color:#fff">登录</router-link>|
+                <router-link to="/register" style="color:#fff">注册</router-link>
+          </div>
         </div>
       </div>
     </nav>
@@ -19,10 +38,8 @@
     </div>
 
     <div class="nav_bottom">
-      <router-link to="/home/index" tag="li">首 页</router-link>
-      
-        <router-link to="/home/products" tag="li">产品展示</router-link>
-     
+      <router-link to="/home/index" tag="li">首 页</router-link>    
+      <router-link to="/home/products" tag="li">产品展示</router-link>
       <router-link to="/home/specialoffer" tag="li">特 价</router-link>
       <router-link to="/home/seckill" tag="li">闪 购</router-link>
       <router-link to="/home/about" tag="li">关于我们</router-link>
@@ -34,7 +51,13 @@
 </template>
 <script>
 import search from "../../components/search";
+import {mapGetters}from"vuex";
 export default {
+  data() {
+    return {
+     show3: true
+    }
+  },
   components: {
     search,
   },
@@ -42,6 +65,15 @@ export default {
     shopcar() {
       this.$router.push("/home/shopcar");
     },
+    enter(){
+      this.show3 = true
+    },
+    leave(){
+      this.show3 = false
+    }
+  },
+  computed: {
+     ...mapGetters({username:"username",token:"token"})
   },
 };
 </script>
@@ -57,25 +89,26 @@ export default {
   height: 50px;
 }
 .nav_top {
-  width: 80%;
+  width: 1200px;
   height: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+ 
 }
-
 .nav_top_login {
-  width: 8%;
+  width:130px;
   color:#fff;
+  position: relative;
   display: flex;
   justify-content: space-between;
 }
-.nav_top_login > a {
-  color: #ffff;
+.nav_top_login>div{
+  color: #fff;
 }
 .nav_middle {
-  width: 80%;
+  width: 1200px;
   margin: 0 auto;
   height: 160px;
   display: flex;
@@ -87,7 +120,7 @@ export default {
   height: 120px;
 }
 .nav_bottom {
-  width: 80%;
+  width: 1200px;
   height: 40px;
   margin: 0 auto;
   font-size: 18px;
@@ -127,4 +160,24 @@ export default {
   font-size: 35px;
   font-weight: bold;
 }
+.personal{
+  position:absolute;
+  width: 200px;
+  height: 400px;
+  top: 35px;
+  z-index: 99;
+  right: -35px;
+  cursor: pointer;
+}
+ .transition-box {
+ 
+    width: 200px;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #409EFF;
+    text-align: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+  
+  }
 </style>

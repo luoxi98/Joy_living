@@ -16,9 +16,16 @@ const routes = [
          {path:"seckill",name:'seckill',component:()=>import("../views/seckill")},
          {path:"about",name:'about',component:()=>import("../views/about")},
          {path:"shopcar",name:'shopcar',component:()=>import("../views/shopcar")},
+         {path:"mycollect",name:'mycollect',component:()=>import("../views/mycollect")},
+         {path:"mycoupons",name:'mycoupons',component:()=>import("../views/mycoupons")},
+         {path:"mynews",name:'mynews',component:()=>import("../views/mynews")},
+         {path:"myorder",name:'myorder',component:()=>import("../views/myorder")},
+
+
+
+
       ]},
 ]
-
 
 
 const router = new VueRouter({

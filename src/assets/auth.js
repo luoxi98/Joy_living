@@ -1,6 +1,5 @@
 const TokenKey = 'Admin-Token'  //设置登录token的key
 export function getToken(){
-
     return sessionStorage.getItem(TokenKey)
 }
 
