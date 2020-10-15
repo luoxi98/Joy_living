@@ -14,7 +14,6 @@
         </el-form-item>
         <el-form-item prop="email" class="registeremail">
           <el-input class="register_from_input" v-model="userInfo.email" placeholder="邮箱 *"></el-input>
-
           <el-button v-show="timeTrue == true" @click="acquire">获取验证码</el-button>
           <el-button v-show="timeTrue == false">{{ time }}秒后重新获取</el-button>
         </el-form-item>

@@ -5,16 +5,18 @@
         <div class="nav_top_login" @mouseenter="enter" @mouseleave="leave">
           <img src="../../imgs/icon_account.png" alt />
             <div v-if="token">
-              <a style="color:#fff;cursor: pointer;">欢迎{{username}}</a>
+              <router-link to="/home/personalcenter" style="color:#fff;cursor: pointer;">欢迎{{usercenters.name}}</router-link>
               <div>
                 <div class="personal" >
-                <el-collapse-transition>
+                  <!-- 展开折叠 elementui -->
+                <el-collapse-transition>  
                     <div v-show="show3">
                     <div class="transition-box">
-                      <router-link tag="li" to="/home/myorder">我的订单</router-link>
-                      <router-link tag="li" to="/home/mycoupons">我的优惠券</router-link>
-                      <router-link tag="li" to="/home/mycollect">我的收藏</router-link>
-                      <router-link tag="li" to="/home/mynews">我的消息</router-link>
+                      <router-link tag="li" to="/home/personalcenter/myorder">我的订单</router-link>
+                      <router-link tag="li" to="/home/personalcenter/mycoupons">我的优惠券</router-link>
+                      <router-link tag="li" to="/home/personalcenter/mycollect">我的收藏</router-link>
+                      <router-link tag="li" to="/home/personalcenter/mynews">我的消息</router-link>
+                      <router-link tag='li' to="/home/index" @click.native="loginout" class="signout">退出登录</router-link>
                     </div>
                     </div>
                 </el-collapse-transition>
@@ -38,30 +40,38 @@
     </div>
 
     <div class="nav_bottom">
-      <router-link to="/home/index" tag="li">首 页</router-link>    
-      <router-link to="/home/products" tag="li">产品展示</router-link>
+      <router-link to="/home/index" tag="li">首 页</router-link>
+      <li>
+        <product>
+          <router-link to="/home/products" tag="li">产品展示</router-link>
+      </product>
+      </li>
       <router-link to="/home/specialoffer" tag="li">特 价</router-link>
       <router-link to="/home/seckill" tag="li">闪 购</router-link>
       <router-link to="/home/about" tag="li">关于我们</router-link>
       <button @click="shopcar">
         <i class="iconfont icon-gouwuche"></i>
+        <div class="cart_count">{{shopcarquantitys}}</div>
       </button>
     </div>
   </div>
 </template>
 <script>
 import search from "../../components/search";
-import {mapGetters}from"vuex";
+import {mapActions, mapGetters}from"vuex";
+import product from "../../components/products"
 export default {
   data() {
     return {
-     show3: true
+     show3: false
     }
   },
   components: {
     search,
+    product,
   },
   methods: {
+     ...mapActions(['signout','usercenter','shopcarquantity']),//触发vuex中的函数
     shopcar() {
       this.$router.push("/home/shopcar");
     },
@@ -70,10 +80,18 @@ export default {
     },
     leave(){
       this.show3 = false
-    }
+    },
+      loginout(){
+       this.signout(''); //token空
+       this.usercenter({});
+       this.shopcarquantity(0) // 购物车
+       this.show3 = false;
+       this.$router.push("/home/index")
+       console.log(this.shopcarquantitys);
+      }
   },
   computed: {
-     ...mapGetters({username:"username",token:"token"})
+     ...mapGetters({usercenters:"usercenters",token:"token",shopcarquantitys:"shopcarquantitys"}) //得到 实时获取vuex中变量变化 自动变化
   },
 };
 </script>
@@ -98,7 +116,7 @@ export default {
  
 }
 .nav_top_login {
-  width:130px;
+  /* width:200px; */
   color:#fff;
   position: relative;
   display: flex;
@@ -116,7 +134,7 @@ export default {
   align-items: center;
 }
 .logo > img {
-  width: 120px;
+  width: 300px;
   height: 120px;
 }
 .nav_bottom {
@@ -127,16 +145,16 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   padding-bottom: 1px;
 }
-.nav_bottom li {
+.nav_bottom>li {
   color: black;
   font-weight: 600;
   height: 100%;
   transition: color border 0.5s;
 }
-.nav_bottom li:hover {
+.nav_bottom>li:hover {
   color: #97d1c9;
   border-bottom: 3px solid #97d1c9;
   cursor: pointer;
@@ -150,11 +168,13 @@ export default {
   color: #97d1c9;
 }
 .nav_bottom button {
-  background-color: #fff;
+  position: relative;
+  display: flex;
 }
 .nav_bottom .icon-gouwuche {
   font-size: 35px;
   font-weight: bold;
+  cursor: pointer;
 }
 .nav_bottom .icon-gouwuche:hover {
   font-size: 35px;
@@ -163,21 +183,37 @@ export default {
 .personal{
   position:absolute;
   width: 200px;
-  height: 400px;
-  top: 35px;
+  top: 36px;
   z-index: 99;
-  right: -35px;
+  right: -20px;
+ transition: all 0.5s;
   cursor: pointer;
 }
  .transition-box {
- 
-    width: 200px;
+    width: 180px;
     height: 100%;
     border-radius: 4px;
-    background-color: #409EFF;
-    text-align: center;
-    padding: 40px 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px 1px rgba(112, 110, 110, 0.5);
+    padding: 20px 20px;
     box-sizing: border-box;
-  
+  }
+  .transition-box li{
+    line-height: 40px;
+    color: #000;
+  }
+  .signout{
+    text-align: center;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+  }
+  .cart_count{
+    padding: 2px;
+    background-color: #97d1c9;
+    border-radius: 50%;
+    color: #fff;
+    position: absolute;
+    right: -8px;
+    top: -3px;
   }
 </style>

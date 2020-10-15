@@ -1,7 +1,7 @@
 import {request} from '../utils/request'
 export function email(params){
 
-    return request({
+   return request({
         url:"/email",
         method:"post",
         // params:params,

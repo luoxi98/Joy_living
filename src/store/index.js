@@ -10,9 +10,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     token:getToken(),//vuex中初始化token
-    username:null
+    username:null,
+    usercenter:null,
+    shopcarquantity:0,
+
   },
-  mutations: {
+  mutations: {  //修改state里面的东西  数据是由action加工处理
     TOKEN(state,TOKEN){
       state.token = TOKEN;
        setToken(TOKEN)
@@ -20,14 +23,23 @@ export default new Vuex.Store({
     USERNAME(state,name){
       console.log(name);
       state.username = name
-    }
+    },
+    USERCENTER(state,usercenter){
+      state.usercenter = usercenter
+    },
+    SHOPCARQUANTITY(state,shopcarquantity){
+     state.shopcarquantity = shopcarquantity
+    },
+    USERINTEGRAL(state,userintegral){
+          state.usercenter.integral = userintegral
+    },
+ 
   },
   actions: {
-    login({commit},userInfo){
-      console.log(userInfo);
+    login({commit},user){
+      console.log(user);
       return new Promise((reslove,reject)=>{
-
-        let {userName,password } = userInfo
+        let {userName,password } = user
         console.log(userName,password)
         login({username:userName,password}).then((res)=>{
           commit('TOKEN',res.token)
@@ -36,9 +48,21 @@ export default new Vuex.Store({
         }).catch((err)=>{
           reject(err);
         })
-
-
       })
+    },
+    signout({commit},data){
+     commit('TOKEN',data) //TOKEN是函数名TOKEN 传给参二
+    },
+    usercenter({commit},data){
+      
+      commit('USERCENTER',data)
+    },
+    shopcarquantity({commit},data){
+      commit('SHOPCARQUANTITY',data)
+    },
+    // 用户积分
+    userintegral({commit},data){
+        commit('USERINTEGRAL',data)
     },
   },
  
@@ -53,8 +77,11 @@ export default new Vuex.Store({
     reducer(state){
       return{
         // 只储存state中的userInfo
-        username:state.username
+        usercenter:state.usercenter,
+        shopcarquantity:state.shopcarquantity
       }
     }
-  })]
+  })
+]
 })
+

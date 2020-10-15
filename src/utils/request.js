@@ -20,7 +20,9 @@ request.interceptors.request.use(res => {
     console.log(res)
     console.log(getURL());
     if (store.getters.token) {
-        res.header["sessiontoken"] = getToken()
+        console.log( getToken());
+        console.log(res);
+        res.headers['sessiontoken'] = getToken()
     }
     return res
 }, error => {

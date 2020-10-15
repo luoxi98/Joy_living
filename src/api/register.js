@@ -1,7 +1,7 @@
 import {request} from "../utils/request"
 export function register(params){
     return request({
-        url:"/register",
+        url:"/user/register",
         method:"post",
         data:params
     })

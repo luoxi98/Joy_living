@@ -19,7 +19,7 @@
         </el-form-item>
         <el-form-item >
           <!-- 注意 还未做跳转找回密码页面 -->
-          <a class="forgetpsd">忘记密码?</a>
+          <router-link  class="forgetpsd" to="/forgetpsd">忘记密码?</router-link>
         </el-form-item>
         <el-form-item class="customer_bottom">
           <button class="loginbtn" @click.prevent="handle('rulesForm')">登 录</button>
@@ -30,7 +30,10 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions} from "vuex";
+import {userInfo} from "../../api/login";
+import {allshopcar} from "../../api/shopcar"
+
 export default {
   name: "Login",
   data() {
@@ -39,7 +42,6 @@ export default {
         userName: "",
         password: "",
       },
-
       rules: {
         userName: [
           { message: "用户名不能为空" },
@@ -55,21 +57,28 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["login"]), //给别人
+    ...mapActions(["login","usercenter",'shopcarquantity']), //给别人   在vuex中的都是实例化的 所以要加this
     handle(formName) {
-      console.log(formName);
+      // console.log(formName);
       this.$refs[formName].validate().then((voild) => {
         if (voild) {
           this.login(this.userInfo)
             .then((data) => {  //data就是vuex中的res
               if (data.code == "204") {
-                this.$message({ message: "登陆成功" ,type:"success"});
+                // console.log(this.token);
+                userInfo().then((res)=>{   //发请求 获取user内容
+                  // console.log(res);
+                  this.usercenter(res.data)  
+                })
+                this.$message({ message: "登陆成功" ,type:"success"}); 
+                 allshopcar().then(res=>{  //登录成功给购物车发请求 获取左上角数量
+                    this.shopcarquantity(res.data.length)
+                  })
                 this.$router.push("/home/index");
               }
               if(data.code == "518"){
                 this.$message({message:"用户名或密码错误"})
               }
-              
             })
             .catch((err) => {
               this.$message({ message: "登录失败" });

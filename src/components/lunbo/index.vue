@@ -1,7 +1,7 @@
 <template>
-  <el-carousel :interval="5000" arrow="always" height="580px">
+  <el-carousel :interval="5000" arrow="always" height="580px" class="lunbo">
     <el-carousel-item v-for="(item,index) in imgs" :key="index">
-     <img :src= "item.src" alt="" width="100%" height="100%">
+     <img :src= "item.src" alt="" width="100%" height="100%" class="lunbo"> 
     </el-carousel-item>
   </el-carousel>
 </template>
@@ -21,4 +21,7 @@ export default {
 }
 </script>
 <style>
+.lunbo{
+  position: relative;
+}
 </style>

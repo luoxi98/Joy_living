@@ -1,6 +1,6 @@
 <template>
   <div class="features">
-    <div class="container">
+    <div class="containerfeatures">
     <div class="features_one">
       <div class="features_typeone">
          <router-link to="/home/products"><img src="../../imgs/deng.jpg" alt=""></router-link> 
@@ -25,7 +25,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  
+};
 </script>
 
 <style>
@@ -36,7 +38,7 @@ export default {};
   margin: 0 auto;
    padding-top: 40px;
 }
-.container{
+.containerfeatures{
   width: 95%;
   height: 100%;
   margin: 0 auto;

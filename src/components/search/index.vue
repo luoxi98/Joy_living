@@ -1,12 +1,24 @@
 <template>
   <div class="search">
-    <input class="search_input" type="text" placeholder="在这里搜索..." value />
-    <button class="search_btn"><i class="iconfont icon-sousuo"></i></button>
+    <input class="search_input" type="text" placeholder="在这里搜索..." v-model="search" />
+    <button class="search_btn"><i class="iconfont icon-sousuo" @click.enter="search_btn" ></i></button>
   </div>
 </template>
 
 <script>
-export default {};
+
+export default {
+  data() {
+    return {
+      search:""
+    }
+  },
+  methods: {
+    search_btn(){
+        this.$router.push({path:"/home/search",query:{keyword:this.search}})
+    }
+  },
+};
 </script>
 
 <style>
@@ -29,7 +41,8 @@ export default {};
   border-bottom-left-radius: 30px;
 }
 .search_btn {
-    padding-right:20px ;
+  cursor: pointer;
+  padding-right:20px ;
   width: 50px;
   background-color: #f4f4f4;
   border-top-right-radius: 30px;
